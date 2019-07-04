@@ -9,12 +9,12 @@ const EventEmitter = require('events').EventEmitter;
 
 module.exports = function(config) {
   if(config === undefined){
-    this.insight_servers = ["https://insight.bitpay.com/", "https://www.localbitcoinschain.com/", "https://search.bitaccess.co/"]
-    this.insight_apis_servers = ["https://insight.bitpay.com/api/", "https://www.localbitcoinschain.com/api/", "https://search.bitaccess.co/insight-api/"]
+    this.insight_servers = ["http://insight.auroracoin.is/","http://insight.auroracoin.is/"]
+    this.insight_apis_servers = ["http://insight.auroracoin.is/api/","http://insight.auroracoin.is/api/"]
   } else {
     if(config.testnet === true){
-      this.insight_servers = ["https://test-insight.bitpay.com/"]
-      this.insight_apis_servers = ["https://test-insight.bitpay.com/api/"]
+      this.insight_servers = ["https://test-insight.auroracoin.is/"]
+      this.insight_apis_servers = ["https://test-insight.auroracoin.is/api/"]
     }
   }
   this.connected = false
@@ -55,6 +55,7 @@ module.exports = function(config) {
                 if (outaddress === address) {
                   // console.log('adding!', each_vout.value)
                   result.in = result.in + each_vout.value * 1000000
+                 result.txid = each_tx.txid;
                 }
               })
             })
@@ -70,6 +71,7 @@ module.exports = function(config) {
 
             })
           })
+          
           result.balance = result.in - result.out
           result.txs = transaction_json.txs.length
           Success({ txs: JSON.parse(body), balance: result })
@@ -81,9 +83,14 @@ module.exports = function(config) {
       })
     })
   }
+
+ 
   this.connect = function() {
+    
     return new Promise(function(Success, Reject) {
+      
       if (self.connected === false) {
+        
         self.url = self.insight_servers.shift()
         self.api_url = self.insight_apis_servers.shift()
         if (self.url != undefined) {
@@ -92,7 +99,9 @@ module.exports = function(config) {
             if (self.connected === false) {
               debug('Could not connect, trying again...')
               self.socket.disconnect()
-              self.connect()
+              self.connect().catch((err)=>{
+              Reject(err);
+              })
             }
           }, 5000)
 
@@ -104,9 +113,10 @@ module.exports = function(config) {
           });
           self.socket.on('tx', function(data) {
             self.events.emit('tx', data)
+           
             data.vout.forEach(function(each_vout) {
               hashdebug({ address: Object.keys(each_vout)[0], amount: each_vout[Object.keys(each_vout)[0]] })
-              self.events.emit(Object.keys(each_vout)[0], { address: Object.keys(each_vout)[0], amount: each_vout[Object.keys(each_vout)[0]] });
+              self.events.emit(Object.keys(each_vout)[0], { address: Object.keys(each_vout)[0], amount: each_vout[Object.keys(each_vout)[0]],txid:data.txid });
             })
             txdebug("New transaction received: " + JSON.stringify(data))
           })
@@ -118,6 +128,7 @@ module.exports = function(config) {
             debug('event', data)
           });
           self.socket.on('disconnect', function(d) {
+            
             debug('disconnect!', d)
           });
           self.socket.on('error', function(e) {
