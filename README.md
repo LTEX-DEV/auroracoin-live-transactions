@@ -6,18 +6,18 @@ This module uses running [insight-api](https://github.com/bitpay/insight-api) in
 How to use it
 --
 
-Create a **BLT** (auroracoin Live Transactions) instance:
+Create a **ALT** (auroracoin Live Transactions) instance:
 ```javascript
 var ALT = require("auroracoin-live-transactions")
 var auroracoin = new ALT()
 ```
 
-Connect to the Bitcoin P2P network:
+Connect to the Auroracoin P2P network:
 ```javasctript
 auroracoin.connect()
 ```
 
-Get a notification when successfully connected to the  Bitcoin P2P network.
+Get a notification when successfully connected to the  Auroracoin P2P network.
 ```javascript
 auroracoin.events.on('connected', function() {
    // start listening to addresses
@@ -26,7 +26,7 @@ auroracoin.events.on('connected', function() {
 
 Check an address
 --
-Check uBTC balance for a given bitcoin address:
+Check uBTC balance for a given Auroracoin address:
 ```javascript
 auroracoin.getBalance('1CZGSZPGsyeeLYyoXdmJtanEmaKKpwYM7g').then(function(balance) {
   console.log('balance:', balance);
@@ -49,12 +49,12 @@ balance: {
 That can be checked here:
 [https://insight.auroracoin.is/address/1CZGSZPGsyeeLYyoXdmJtanEmaKKpwYM7g](https://insight.auroracoin.is/address/1CZGSZPGsyeeLYyoXdmJtanEmaKKpwYM7g)
 
-To get all the detailed information about an address, use **bitcoin.getTxs** instead of **bitcoin.getBalance**
+To get all the detailed information about an address, use **auroracoin.getTxs** instead of **auroracoin.getBalance**
 
 Live stream
 --
 
-To Listen to live transaction events on the Bitcoin P2P network for a given address, the event is called as the address itself:
+To Listen to live transaction events on the Auroracoin P2P network for a given address, the event is called as the address itself:
 ```javascript
 auroracoin.events.on('138WJKb1mXbkRGNpyMVEZ9EsoXjMEvJfT4',function(tx){
   console.log('Transaction detected!', tx);
