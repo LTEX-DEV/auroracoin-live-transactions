@@ -1,15 +1,15 @@
-bitcoin-live-transactions
+auroracoin-live-transactions
 =====
 
-This module uses running [insight-api](https://github.com/bitpay/insight-api) instances to get live bitcoin transaction as they happen in the Bitcoin P2P network. 
+This module uses running [insight-api](https://github.com/bitpay/insight-api) instances to get live auroracoin transaction as they happen in the Auroracoin P2P network. 
 
 How to use it
 --
 
-Create a **BLT** (Bitcoin Live Transactions) instance:
+Create a **BLT** (auroracoin Live Transactions) instance:
 ```javascript
-var BLT = require("auroracoin-live-transactions")
-var auroracoin = new BLT()
+var ALT = require("auroracoin-live-transactions")
+var auroracoin = new ALT()
 ```
 
 Connect to the Bitcoin P2P network:
@@ -101,6 +101,6 @@ Testnet
 To use test-net add *{testnet:true}* when instantiating the module, as follows:
 
 ```javascript
-var BLT = require("auroracoin-live-transactions")
-var auroracoin = new BLT({testnet: true})
+var ALT = require("auroracoin-live-transactions")
+var auroracoin = new ALT({testnet: true})
 ```
