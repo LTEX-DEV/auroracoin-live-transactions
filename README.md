@@ -8,18 +8,18 @@ How to use it
 
 Create a **BLT** (Bitcoin Live Transactions) instance:
 ```javascript
-var BLT = require("bitcoin-live-transactions")
-var bitcoin = new BLT()
+var BLT = require("auroracoin-live-transactions")
+var auroracoin = new BLT()
 ```
 
 Connect to the Bitcoin P2P network:
 ```javasctript
-bitcoin.connect()
+auroracoin.connect()
 ```
 
 Get a notification when successfully connected to the  Bitcoin P2P network.
 ```javascript
-bitcoin.events.on('connected', function() {
+auroracoin.events.on('connected', function() {
    // start listening to addresses
 })
 ```
@@ -28,7 +28,7 @@ Check an address
 --
 Check uBTC balance for a given bitcoin address:
 ```javascript
-bitcoin.getBalance('1CZGSZPGsyeeLYyoXdmJtanEmaKKpwYM7g').then(function(balance) {
+auroracoin.getBalance('1CZGSZPGsyeeLYyoXdmJtanEmaKKpwYM7g').then(function(balance) {
   console.log('balance:', balance);
 })
 ```
@@ -47,7 +47,7 @@ balance: {
 ```
 
 That can be checked here:
-[https://insight.bitpay.com/address/1CZGSZPGsyeeLYyoXdmJtanEmaKKpwYM7g](https://insight.bitpay.com/address/1CZGSZPGsyeeLYyoXdmJtanEmaKKpwYM7g)
+[https://insight.auroracoin.is/address/1CZGSZPGsyeeLYyoXdmJtanEmaKKpwYM7g](https://insight.auroracoin.is/address/1CZGSZPGsyeeLYyoXdmJtanEmaKKpwYM7g)
 
 To get all the detailed information about an address, use **bitcoin.getTxs** instead of **bitcoin.getBalance**
 
@@ -56,7 +56,7 @@ Live stream
 
 To Listen to live transaction events on the Bitcoin P2P network for a given address, the event is called as the address itself:
 ```javascript
-bitcoin.events.on('138WJKb1mXbkRGNpyMVEZ9EsoXjMEvJfT4',function(tx){
+auroracoin.events.on('138WJKb1mXbkRGNpyMVEZ9EsoXjMEvJfT4',function(tx){
   console.log('Transaction detected!', tx);
 })
 ```
@@ -74,7 +74,7 @@ If you want to see **ALL** transactions happening live, use the **tx** event:
 
 
 ```javascript
-bitcoin.events.on('tx',function(tx){
+auroracoin.events.on('tx',function(tx){
   console.log('>> Transaction detected:', tx);
 })
 ```
@@ -101,6 +101,6 @@ Testnet
 To use test-net add *{testnet:true}* when instantiating the module, as follows:
 
 ```javascript
-var BLT = require("bitcoin-live-transactions")
-var bitcoin = new BLT({testnet: true})
+var BLT = require("auroracoin-live-transactions")
+var auroracoin = new BLT({testnet: true})
 ```
